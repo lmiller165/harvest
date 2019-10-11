@@ -85,6 +85,9 @@ def make_melon_type_lookup(melon_types):
 
 #print(make_melon_type_lookup(make_melon_types()))
 
+
+
+
 ############
 # Part 2   #
 ############
@@ -126,7 +129,7 @@ def make_melons(melon_types):
     melon9 = Melon(melons_by_id['yw'], 7, 10, 3, 'Sheila')
 
     melon_list2 = [melon1, melon2, melon3, melon4, melon5, melon6, melon7, melon8, melon9]
-
+    print("melon2: ", melon2)
     return melon_list2
 
 def get_sellability_report(melons):
@@ -142,11 +145,36 @@ def get_sellability_report(melons):
         print(f"Harvested by {melon.harvested_by} from Field {melon.field} {is_sellable}")
 
 
+def harvest_log(filename, melon_types):
+
+    melons_by_id = make_melon_type_lookup(melon_types)
+    
+    harvest_log = open(filename)
+    another_melon_list = []
+    meloncount = 10
+    for line in harvest_log:
+        line = line.rstrip()
+        line_list = line.split(" ")
+        
+        shape_rating = line_list[1]
+        color_rating = line_list[3]
+        code = line_list[5]
+        harvested_by = line_list[8:10]
+        field = line_list[11]
+
+        melon_name = 'melon' + str(meloncount)
 
 
+        melon_name = Melon(melons_by_id[code], shape_rating, color_rating, field, harvested_by)
+        print(melon_name)
+        meloncount += 1
+        another_melon_list.append(melon_name)
+
+    print(another_melon_list)
+    print("melon12: ", melon_name)
 
 melon_types = make_melon_types()
 melons_list2 = make_melons(melon_types)
-get_sellability_report(melons_list2)
-
+# get_sellability_report(melons_list2)
+harvest_log('harvest_log.txt', melon_types)
 
